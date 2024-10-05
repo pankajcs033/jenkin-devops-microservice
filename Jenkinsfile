@@ -1,7 +1,7 @@
 // DECLARATIVE
 pipeline {
 	// agent any // mandatory
-	agent { docker { image : 'maven:3.6.3'}}
+	agent { docker { image 'maven:3.6.3'}}
 	stages { // mandatory
 		stage('Build') { // mandatory
 			steps { // mandatory
