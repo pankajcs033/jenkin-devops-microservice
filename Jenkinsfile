@@ -1,8 +1,9 @@
 // DECLARATIVE
 pipeline {
-	stages {
-		stage('Build') {
-			steps {
+	agent any // mandatory
+	stages { // mandatory
+		stage('Build') { // mandatory
+			steps { // mandatory
 				echo "Build"
 			}
 		}
