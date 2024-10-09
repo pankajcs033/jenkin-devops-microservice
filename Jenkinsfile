@@ -1,44 +1,41 @@
-// DECLARATIVE
 pipeline {
-    // agent any // mandatory
-    agent none
-    stages { // mandatory
-        stage('Maven Install') {
-        agent {
-            docker {
-            image 'maven:3.5.0'
-            }
+    agent {
+        docker {
+            image 'docker:latest'  // Docker image with Docker, but no Compose or curl
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Bind Docker socket
         }
-        steps {
-            sh 'mvn clean install'
-        }
-        }
-        stage('Build') { // mandatory
-            steps { // mandatory
-                // echo "Build"
-                sh 'mvn --version'
-            }
-        }
-        stage('Test') {
+    }
+
+    stages {
+
+        stage('Build Docker Containers') {
             steps {
-                echo "Test"
+                sh 'docker compose up -d'
             }
         }
-        stage('Integration Test') {
+
+        stage('Run API Tests') {
             steps {
-                echo "Integration Test"
+                sh 'docker exec lms-api-automation /bin/sh -c "mvn clean test"'
+            }
+        }
+
+        stage('Generate Report') {
+            steps {
+                sh 'docker cp lms-api-automation:/home/apiautomation/testrun-reports ./testrun-reports'
+            }
+        }
+
+        stage('Archive Report') {
+            steps {
+                archiveArtifacts artifacts: 'testrun-reports/*', allowEmptyArchive: true
             }
         }
     }
+
     post {
         always {
-            echo 'I run always'
-        }
-        success {
-            echo 'I run when you success'
-        }
-        failure {
-            echo 'I run when you fail'
+            sh 'docker compose down'
         }
     }
 }
