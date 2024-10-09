@@ -1,13 +1,7 @@
 // DECLARATIVE
 pipeline {
 	// agent any // mandatory
-	// agent { docker { image 'node:20.18.0-alpine3.20'}}
-	agent {
-        docker {
-            image 'docker:latest'  // Docker image with Docker, but no Compose or curl
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Bind Docker socket
-        }
-    }
+	agent { docker { image 'node:20.18.0-alpine3.20'}}
 	stages { // mandatory
 		stage('Build') { // mandatory
 			steps { // mandatory
