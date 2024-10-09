@@ -1,12 +1,17 @@
 // DECLARATIVE
 pipeline {
 	// agent any // mandatory
-	agent { docker { image 'node:20.18.0-alpine3.20'}}
+	agent { 
+		docker { 
+				image 'maven:3.9.3-eclipse-temurin-17'
+            	args '-v $HOME/.m2:/root/.m2'
+				}
+		}
 	stages { // mandatory
 		stage('Build') { // mandatory
 			steps { // mandatory
 				// echo "Build"
-				sh 'node --version'
+				sh 'mvn --version'
 			}
 		}
 		stage('Test') {
