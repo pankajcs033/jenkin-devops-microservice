@@ -1,15 +1,12 @@
 // DECLARATIVE
 pipeline {
 	// agent any // mandatory
-	environment{
-		DOCKER_CERT_PATH='C:/Users/pankaj.docker/machine/certs'
-	}
-	agent { docker { image 'maven:3.6.3'}}
+	agent { docker { image 'node:20.18.0-alpine3.20'}}
 	stages { // mandatory
 		stage('Build') { // mandatory
 			steps { // mandatory
 				// echo "Build"
-				sh 'mvn --version'
+				sh 'node --version'
 			}
 		}
 		stage('Test') {
