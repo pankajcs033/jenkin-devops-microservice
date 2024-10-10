@@ -1,12 +1,14 @@
 // DECLARATIVE
 pipeline {
-	// agent any // mandatory
-	agent { docker { image 'node:20.18.0-alpine3.20'}}
+	agent any // mandatory
+	// agent { docker { image 'node:20.18.0-alpine3.20'}}
 	stages { // mandatory
 		stage('Build') { // mandatory
 			steps { // mandatory
 				// echo "Build"
-				sh 'docker -v'
+				sh 'pwd'
+				sh 'ls -a -R'
+				
 			}
 		}
 		stage('Test') {
