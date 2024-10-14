@@ -11,8 +11,8 @@ pipeline {
         stage('Build') { // mandatory
             steps { // mandatory
                 echo "Build"
-                echo 'mvn --version'
-                echo 'docker version'
+                sh 'mvn --version'
+                sh 'docker version'
                 
             }
         }
